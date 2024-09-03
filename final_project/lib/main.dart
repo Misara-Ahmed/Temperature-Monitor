@@ -44,6 +44,17 @@ class _MyHomePageState extends State<MyHomePage> {
         onNewMessage: onMessage, listenInBackground: false);
   }
 
+<<<<<<< HEAD
+=======
+  // void requestPermissions() async {
+  //   bool? result = await telephony.requestSmsPermissions;
+  //   if (result == null || !result) {
+  //     // Handle the case where permissions are not granted
+  //     print("SMS permissions not granted");
+  //   }
+  // }
+
+>>>>>>> 00c699658c618891e56320b91b00d896fecbba69
   onMessage(SmsMessage message) async {
     setState(() {
       _temperature = message.body ?? "Error reading message body.";
@@ -182,6 +193,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   ],
                 ),
                 const SizedBox(height: 20),
+<<<<<<< HEAD
                 // Row(
                 //   mainAxisAlignment: MainAxisAlignment.center,
                 //   children: [
@@ -194,6 +206,20 @@ class _MyHomePageState extends State<MyHomePage> {
                 //     ),
                 //   ],
                 // ),
+=======
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      feedbackText,
+                      style: const TextStyle(
+                        color: Color(0xFFEEDEED),
+                        fontSize: 25,
+                      ),
+                    ),
+                  ],
+                ),
+>>>>>>> 00c699658c618891e56320b91b00d896fecbba69
               ],
             ),
           ),

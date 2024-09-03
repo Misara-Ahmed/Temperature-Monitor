@@ -7,13 +7,22 @@ publish_to: 'none'
 version: 1.0.0+1
 
 environment:
+<<<<<<< HEAD
   #sdk: '>=3.3.4 <4.0.0'
   sdk: '^3.2.3'
+=======
+#  sdk: '>=3.3.4 <4.0.0'
+    sdk: '^3.2.0'
+>>>>>>> 00c699658c618891e56320b91b00d896fecbba69
 
 dependencies:
   flutter:
     sdk: flutter
   cupertino_icons: ^1.0.6
+<<<<<<< HEAD
+=======
+  
+>>>>>>> 00c699658c618891e56320b91b00d896fecbba69
   telephony: ^0.2.0
 
 dev_dependencies:
