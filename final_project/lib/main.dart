@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:telephony/telephony.dart';
 
 void main() {
   runApp(const MyApp());
@@ -10,11 +11,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Temperature Control',
+      title: 'Temperature Monitor',
       theme: ThemeData(
         useMaterial3: true,
       ),
-      home: const MyHomePage(title: 'Temperature Control'),
+      home: const MyHomePage(title: 'Temperature Monitor'),
     );
   }
 }
@@ -30,8 +31,29 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   bool _isOn = false;
-  TextEditingController _temperatureController = TextEditingController();
+  //TextEditingController _temperatureController = TextEditingController();
   String feedbackText = "Feedback";
+  String _temperature = "";
+  final telephony = Telephony.instance;
+
+  @override
+  void initState() {
+    super.initState();
+    //requestPermissions();
+    telephony.listenIncomingSms(
+        onNewMessage: onMessage, listenInBackground: false);
+  }
+
+  onMessage(SmsMessage message) async {
+    setState(() {
+      _temperature = message.body ?? "Error reading message body.";
+    });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -54,7 +76,7 @@ class _MyHomePageState extends State<MyHomePage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: const [
                 Text(
-                  'Temperature Control',
+                  'Temperature Monitor',
                   style: TextStyle(
                     color: Color(0xFFEEDEED),
                     fontSize: 25.0,
@@ -79,7 +101,19 @@ class _MyHomePageState extends State<MyHomePage> {
                     ElevatedButton(
                       onPressed: () {
                         setState(() {
-                          _isOn = !_isOn;
+                          if (_isOn) {
+                            _isOn = !_isOn;
+                            telephony.sendSms(
+                              to: "01157127253",
+                              message: "@0",
+                            );
+                          } else {
+                            _isOn = !_isOn;
+                            telephony.sendSms(
+                              to: "01157127253",
+                              message: "@1",
+                            );
+                          }
                         });
                       },
                       style: ElevatedButton.styleFrom(
@@ -97,7 +131,19 @@ class _MyHomePageState extends State<MyHomePage> {
                     GestureDetector(
                       onTap: () {
                         setState(() {
-                          _isOn = !_isOn;
+                          if (_isOn) {
+                            _isOn = !_isOn;
+                            telephony.sendSms(
+                              to: "01157127253",
+                              message: "@0",
+                            );
+                          } else {
+                            _isOn = !_isOn;
+                            telephony.sendSms(
+                              to: "01157127253",
+                              message: "@1",
+                            );
+                          }
                         });
                       },
                       child: Image.asset(
@@ -125,8 +171,8 @@ class _MyHomePageState extends State<MyHomePage> {
                         borderRadius: BorderRadius.circular(5.0),
                       ),
                       padding: const EdgeInsets.all(8.0),
-                      child: const Text(
-                        '25',
+                      child: Text(
+                        _temperature,
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 25,
@@ -136,18 +182,18 @@ class _MyHomePageState extends State<MyHomePage> {
                   ],
                 ),
                 const SizedBox(height: 20),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      feedbackText,  
-                      style: const TextStyle(
-                        color: Color(0xFFEEDEED),
-                        fontSize: 25,
-                      ),
-                    ),
-                  ],
-                ),
+                // Row(
+                //   mainAxisAlignment: MainAxisAlignment.center,
+                //   children: [
+                //     Text(
+                //       feedbackText,
+                //       style: const TextStyle(
+                //         color: Color(0xFFEEDEED),
+                //         fontSize: 25,
+                //       ),
+                //     ),
+                //   ],
+                // ),
               ],
             ),
           ),
